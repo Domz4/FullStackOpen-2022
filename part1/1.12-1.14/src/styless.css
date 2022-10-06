@@ -1,0 +1,52 @@
+/* basic css for cleaner view what's happening  */
+
+*,
+::after,
+::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 2vw;
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+}
+.btns {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+#root {
+  grid-row: 2;
+}
+.btn {
+  display: inline-block;
+  background: rgb(33, 33, 44);
+  color: rgb(252, 245, 239);
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.3rem;
+  border-color: transparent;
+  text-transform: capitalize;
+  font-size: 0.8rem;
+  letter-spacing: 0.25rem;
+  cursor: pointer;
+  transition: all 0.3s linear;
+  margin-left: 0.3rem;
+  margin-right: 0.3rem;
+}
+.display {
+  text-align: center;
+}
+#anecdote {
+  height: 7vh;
+  border-radius: 10rem;
+  margin: 1rem;
+}
