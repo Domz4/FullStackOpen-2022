@@ -1,6 +1,17 @@
 import { useState, useEffect } from "react";
 import service from "./services/persons";
+import "./styless.css";
 
+const Notification = ({ message }) => {
+  if (message === null) {
+    return null;
+  }
+  if (message.inludes("failed")) {
+    return <div className="error">{message}</div>;
+  }
+
+  return <div className="success">{message}</div>;
+};
 const Persons = ({ persons, del }) => {
   return (
     <>
@@ -46,6 +57,7 @@ const App = () => {
   const [persons, setPersons] = useState([]);
   const [newPerson, setNewPerson] = useState({ name: "", number: "" });
   const [search, setSearch] = useState("");
+  const [msg, setMsg] = useState(null);
 
   const addNumber = (e) => {
     e.preventDefault();
@@ -58,7 +70,7 @@ const App = () => {
         .then((returnedPerson) => {
           setPersons(persons.concat(returnedPerson));
         })
-        .catch((error) => console.log(error.response.data.error));
+        .catch((error) => setMsg(error.response.data.error));
     } else {
       if (
         window.confirm(
@@ -72,8 +84,10 @@ const App = () => {
               person.id !== returnedPerson.id ? person : returnedPerson
             );
             setPersons(updatedPersons);
+            setMsg(`Added ${newPerson.name} to phonebook`);
+            console.log(msg);
           })
-          .catch((error) => console.log(error.response.data.error));
+          .catch((error) => setMsg(error.response.data.error));
       }
     }
     setNewPerson({ name: "", number: "" });
@@ -100,17 +114,18 @@ const App = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log({ value });
+   
     setNewPerson({ ...newPerson, [name]: value });
   };
 
   const handleSearchChange = (e) => {
     setSearch(e.target.value);
   };
-  console.log(newPerson);
+  
   return (
     <div>
       <div>
+        <Notification message={msg} />
         <p>
           search number:
           <input value={search} onChange={handleSearchChange}></input>
