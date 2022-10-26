@@ -1,5 +1,15 @@
 const express = require("express");
+const morgan = require("morgan");
 const app = express();
+
+app.use(express.json());
+
+morgan.token("data", (req, res) =>
+  req.method === "POST" ? JSON.stringify(req.body) : ""
+);
+app.use(
+  morgan(":method :url :status :res[content-length] - :response-time ms :data")
+);
 
 let phonebook = [
   {
@@ -28,7 +38,6 @@ const generateId = () => {
     phonebook.length > 0 ? Math.max(...phonebook.map((n) => n.id)) : 0;
   return maxId + 1;
 };
-app.use(express.json());
 
 app.get("/", (req, res) => {
   res.send("<h1>Hello</h1>");
