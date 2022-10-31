@@ -1,28 +1,24 @@
 import axios from "axios";
-const baseUrl = "http://localhost:3001/persons";
+const baseUrl = "/api/phonebook";
 
-const getAll = async () => {
-  const request = axios.get(baseUrl);
-  const response = await request;
-  return response.data;
+const getAll = () => {
+  const req = axios.get(baseUrl);
+  return req.then((res) => res.data);
 };
 
-const create = async (newObject) => {
-  const request = axios.post(baseUrl, newObject);
-  const response = await request;
-  return response.data;
+const create = (newObject) => {
+  const req = axios.post(baseUrl, newObject);
+  return req.then((res) => res.data);
 };
 
-const update = async (id, newObject) => {
-  const request = axios.put(`${baseUrl}/${id}`, newObject);
-  const response = await request;
-  return response.data;
+const update = (id, newObject) => {
+  const req = axios.put(`${baseUrl}/${id}`, newObject);
+  return req.then((res) => res.data);
 };
 
-const del = async (id) => {
-  const request = axios.delete(`${baseUrl}/${id}`);
-  const response = await request;
-  return response.data;
+const del = (id) => {
+  const req = axios.delete(`${baseUrl}/${id}`);
+  return req.then((res) => res.data);
 };
 
 export default { getAll, create, update, del };

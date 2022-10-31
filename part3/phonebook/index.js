@@ -1,8 +1,11 @@
 const express = require("express");
 const morgan = require("morgan");
+const cors = require("cors");
 const app = express();
 
+app.use(cors());
 app.use(express.json());
+app.use(express.static("build"));
 
 morgan.token("data", (req, res) =>
   req.method === "POST" ? JSON.stringify(req.body) : ""
@@ -33,6 +36,7 @@ let phonebook = [
     number: "39-23-6423122",
   },
 ];
+
 const generateId = () => {
   const maxId =
     phonebook.length > 0 ? Math.max(...phonebook.map((n) => n.id)) : 0;
@@ -44,19 +48,9 @@ app.get("/", (req, res) => {
 });
 app.post("/api/phonebook", (req, res) => {
   const body = req.body;
-  const persons = phonebook.find(
-    (e) => e.name === body.name || e.number === body.number
-  );
+
   if (!body) {
     return res.status(400).json({ error: "content missing" });
-  }
-  if (!!persons) {
-    return res.status(406).json({
-      error: `User ${persons.name} or number ${persons.number} already exists`,
-    });
-  }
-  if (body.name === "" || body.number === "") {
-    return res.json({ error: "You must enter name and number" });
   }
 
   const person = {
@@ -79,6 +73,23 @@ app.delete("/api/phonebook/:id", (req, res) => {
   res.status(204).end();
 });
 
+app.put("/api/phonebook/:id", (req, res, next) => {
+  const { name, number } = req.body;
+  const updatedPerson = { name: name, number: number };
+  const id = Number(req.params.id);
+
+  phonebook = phonebook
+    .map((e) => {
+      if (e.id === id) return (e.id = updatedPerson);
+    })
+    .then((updatedPhonebook) => {
+      res.json(updatedPhonebook);
+    })
+    .catch((err) => {
+      next(err);
+    });
+});
+
 app.get("/api/phonebook/:id", (req, res) => {
   const id = Number(req.params.id);
   const person = phonebook.find((e) => e.id === id);
@@ -98,8 +109,13 @@ app.get("/info", (req, res) => {
     } people</h1> <p>${new Date()}</p>`
   );
 });
+const unknownEndpoint = (req, res) => {
+  res.status(404).send({ error: "unknown endpoint" });
+};
 
-const PORT = 3001;
+app.use(unknownEndpoint);
+
+const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
   console.log(`server running on port${PORT}`);
 });
