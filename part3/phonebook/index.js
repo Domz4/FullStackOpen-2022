@@ -24,7 +24,7 @@ app.get("/api/phonebook", (req, res) => {
 app.get("/info", (req, res, next) => {
   Phonebook.find({})
     .then((people) => {
-      response.send(
+      res.send(
         `<p>Phonebook has info for ${
           people.length
         } people</p><p>${new Date()}</p>`
@@ -44,7 +44,7 @@ app.get("/api/phonebook/:id", (req, res, next) => {
     .catch((err) => next(err));
 });
 
-app.delete("/api/phonebook/:id", (req, res) => {
+app.delete("/api/phonebook/:id", (req, res, next) => {
   Phonebook.findByIdAndDelete(req.params.id)
     .then(() => {
       res.status(204).end();
@@ -54,6 +54,7 @@ app.delete("/api/phonebook/:id", (req, res) => {
 
 app.post("/api/phonebook", (req, res, next) => {
   const { name, number } = req.body;
+
   const phonebook = new Phonebook({
     name: name,
     number: number,
@@ -92,6 +93,8 @@ const errorHandler = (error, request, response, next) => {
 
   if (error.name === "CastError") {
     return response.status(400).send({ error: "malformatted id" });
+  } else if (error.name === "ValidationError") {
+    return response.status(400).json({ error: error.message });
   }
 
   next(error);

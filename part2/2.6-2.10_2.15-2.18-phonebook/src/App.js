@@ -3,11 +3,8 @@ import service from "./services/persons";
 import "./styless.css";
 
 const Notification = ({ msg }) => {
-  console.log("msg console log", msg);
-  if (msg === null) {
-    return null;
-  }
-  if (msg === "failed") {
+  if (msg === null) return null;
+  if (msg.includes("failed")) {
     return <div className="error">{msg}</div>;
   }
   return <div className="success">{msg}</div>;
