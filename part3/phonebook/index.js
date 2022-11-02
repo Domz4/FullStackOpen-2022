@@ -5,8 +5,8 @@ const app = express();
 require("dotenv").config();
 const Phonebook = require("./models/phonebook");
 
-app.use(cors());
 app.use(express.json());
+app.use(cors());
 app.use(express.static("build"));
 
 morgan.token("data", (req, res) =>
@@ -32,10 +32,16 @@ app.get("/info", (req, res, next) => {
     })
     .catch((err) => next(err));
 });
-app.get("/api/phonebook/:id", (req, res) => {
-  Phonebook.findById(req.params.id).then((phonebook) => {
-    res.json(phonebook);
-  });
+app.get("/api/phonebook/:id", (req, res, next) => {
+  Phonebook.findById(req.params.id)
+    .then((phonebook) => {
+      if (phonebook) {
+        res.json(phonebook);
+      } else {
+        res.status(404).end();
+      }
+    })
+    .catch((err) => next(err));
 });
 
 app.delete("/api/phonebook/:id", (req, res) => {
@@ -62,15 +68,15 @@ app.post("/api/phonebook", (req, res, next) => {
 });
 
 app.put("/api/phonebook/:id", (req, res, next) => {
-  const { name, number } = request.body;
+  const { name, number } = req.body;
 
   Phonebook.findByIdAndUpdate(
-    request.params.id,
+    req.params.id,
     { name, number },
     { new: true, runValidators: true, context: "query" }
   )
     .then((updatedPhonebook) => {
-      response.json(updatedPhonebook);
+      res.json(updatedPhonebook);
     })
     .catch((err) => next(err));
 });
@@ -81,6 +87,16 @@ const unknownEndpoint = (req, res) => {
 
 app.use(unknownEndpoint);
 
+const errorHandler = (error, request, response, next) => {
+  console.error(error.message);
+
+  if (error.name === "CastError") {
+    return response.status(400).send({ error: "malformatted id" });
+  }
+
+  next(error);
+};
+app.use(errorHandler);
 
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
