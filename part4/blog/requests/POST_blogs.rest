@@ -1,0 +1,9 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+{
+  "title": "Tear Along the Dotted Line",
+  "author": "Zerocalcare",
+  "url": "https://en.wikipedia.org/wiki/Tear_Along_the_Dotted_Line",
+  "likes": 62330
+}
