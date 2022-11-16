@@ -17,10 +17,13 @@ const blogSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+<<<<<<< HEAD
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
+=======
+>>>>>>> 916c54219680dfb64e3f87aafe43fc3595966509
 });
 
 blogSchema.set("toJSON", {
