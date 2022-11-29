@@ -1,9 +1,6 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-<<<<<<< HEAD
 Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRvbWlubyIsImlkIjoiNjM3M2E5NmY4OTU4Y2Q1OGU5NzA2MjQ0IiwiaWF0IjoxNjY4NTI0NDEyLCJleHAiOjE2Njg1MjgwMTJ9.CfK35WuIF8_kuGh53lZp0mhIEhhGS4q0Lx7xSp25PGY
-=======
->>>>>>> 916c54219680dfb64e3f87aafe43fc3595966509
 
 {
   "title": "Tear Along the Dotted Line",

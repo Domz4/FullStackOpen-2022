@@ -1,0 +1,13 @@
+POST http://localhost:3001/api/blogs
+Content-Type:application/json
+Authorization:bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkRvbWluaWsiLCJpZCI6IjYzN2JjMTFhMGMxZTA1NGMzMDJiMmQ2NiIsImlhdCI6MTY2OTM3NDU1Nn0.eBFBpRfNVvMRWs-D6xksXOSWw-nSsFDLx7q18wado_g
+
+{
+  "title": "Tear Along the Dotted Line",
+  "author": "Zerocalcare",
+  "url": "https://en.wikipedia.org/wiki/Tear_Along_the_Dotted_Line",
+  "likes": 62330
+}
+
+
+

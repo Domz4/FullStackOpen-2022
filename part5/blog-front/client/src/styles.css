@@ -1,0 +1,32 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: x-large;
+}
+.error,
+.success {
+  background: lightgrey;
+  font-size: 20px;
+  border-style: solid;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.error {
+  color: red;
+}
+
+.success {
+  color: green;
+}
+.blog {
+  margin: 10px 0;
+  padding: 10px 0;
+  border-style: solid;
+  border-color: black;
+}
+.blog:nth-of-type(2) {
+  border-color: orange;
+}
