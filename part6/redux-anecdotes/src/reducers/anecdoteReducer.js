@@ -24,7 +24,10 @@ const anecdotesReducer = (state = initialState, action) => {
       const { id } = action.data;
       const toUpdate = state.find((e) => e.id === id);
       const updated = { ...toUpdate, votes: toUpdate.votes + 1 };
-      return state.map((e) => (e.id === id ? updated : e));
+      const sorted = state
+        .map((e) => (e.id === id ? updated : e))
+        .sort((a, b) => a.votes < b.votes);
+      return sorted;
     }
     case "CREATE": {
       return [...state, action.data];

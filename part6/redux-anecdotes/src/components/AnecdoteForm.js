@@ -1,8 +1,7 @@
 import { addAnecdote } from "../reducers/anecdoteReducer";
-import { useSelector, useDispatch } from "react-redux";
+import {useDispatch } from "react-redux";
 
 function AnecdoteForm() {
-  const anecdotes = useSelector((state) => state);
   const dispatch = useDispatch();
 
   const handleAnecdote = (e) => {
