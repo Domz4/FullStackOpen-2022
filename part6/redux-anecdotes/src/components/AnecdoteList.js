@@ -1,13 +1,19 @@
-import { addVote } from "../reducers/anecdoteReducer";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { addVote } from "../reducers/anecdoteReducer";
 import {
   hideNotification,
   showNotification,
 } from "../reducers/notificationReducer";
 
 function AnecdoteList() {
-  const anecdotes = useSelector((state) => state.anecdotes);
+  const anecdotes = useSelector((state) =>
+    state.anecdotes.filter((e) => e.content.includes(state.filter))
+  );
+  console.log(useSelector((state) => state.filter));
+
   const dispatch = useDispatch();
+
   const handleVote = (anecdote) => {
     dispatch(addVote(anecdote.id));
     dispatch(showNotification(`you voted for ${anecdote.content}`));
