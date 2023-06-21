@@ -1,0 +1,7 @@
+PUT http://localhost:3001/api/balance
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QxMjMiLCJpZCI6IjY0NGU5ZjVkYzE0MGZkZDc5Mzc0YjI5NiIsImlhdCI6MTY4Mjk0OTY0OX0.nlWLIroptlAjvwk-tzcTFNMWS9gXG29RCN_p4rj8ntA
+
+{
+  "amount": 4000
+}
